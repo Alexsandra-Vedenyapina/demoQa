@@ -12,11 +12,11 @@ import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
-@Feature(("Student Registration Form"))
+@Feature(("Форма регистрации студента"))
 public class PracticFormTest {
 
     @Test
-    @Story("Successful submission")
+    @Story("Успешная отправка студента")
     @Owner("AVedenyapina")
     @Severity(SeverityLevel.BLOCKER)
     @Tag("BLOKER")

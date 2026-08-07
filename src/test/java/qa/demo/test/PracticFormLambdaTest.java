@@ -19,7 +19,7 @@ import static io.qameta.allure.Allure.step;
 public class PracticFormLambdaTest {
 
     @Test
-    @Story("Successful submission")
+    @Story("Успешная отправка студента")
     @Owner("AVedenyapina")
     @Severity(SeverityLevel.BLOCKER)
     @Tag("BLOKER")
@@ -68,7 +68,7 @@ public class PracticFormLambdaTest {
         });
 
         step("Проверка отображения фамилии и имени студента",()->{
-            $$("td").filterBy(text("Student Name")).get(0).sibling(0).shouldHave(text("Ivan Pupochkin8"));
+            $$("td").filterBy(text("Student Name")).get(0).sibling(0).shouldHave(text("Ivan Pupochkin"));
         });
 
     }
