@@ -1,20 +1,16 @@
-package qa.demo.pages;
+package qa.demo.test;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.*;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.files.DownloadActions.click;
-import static com.codeborne.selenide.impl.Html.text;
-import com.codeborne.selenide.WebDriverRunner;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
 
 @Feature(("Student Registration Form"))
 public class PracticFormTest {
@@ -26,6 +22,7 @@ public class PracticFormTest {
     @Tag("BLOKER")
     @DisplayName("Успешное заполнение формы студента")
     public  void testStudentRegistrationFormSuccessfulSubmission(){
+        SelenideLogger.addListener("allure", new AllureSelenide());
         Configuration.browserSize = "1920x1080";
 
         open("https://demoqa.com/automation-practice-form");
@@ -41,7 +38,7 @@ public class PracticFormTest {
         $("button#submit").shouldBe(Condition.clickable).click();
 
         $("div.fade.modal.show").shouldHave(text("Thanks for submitting the form"));
-        $$("td").filterBy(text("Student Name")).get(0).sibling(0).shouldHave(text("Ivan Pupochkin"));
+        $$("td").filterBy(text("Student Name")).get(0).sibling(0).shouldHave(text("Ivan Pupochkin8"));
 
     }
 }
