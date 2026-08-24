@@ -38,7 +38,7 @@ public class PracticFormTest {
         $("button#submit").shouldBe(Condition.clickable).click();
 
         $("div.fade.modal.show").shouldHave(text("Thanks for submitting the form"));
-        $$("td").filterBy(text("Student Name")).get(0).sibling(0).shouldHave(text("Ivan Pupochkin8"));
+        $$("td").filterBy(text("Student Name")).get(0).sibling(0).shouldHave(text("Ivan Pupochkin"));
 
     }
 }

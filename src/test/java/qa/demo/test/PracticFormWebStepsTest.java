@@ -17,7 +17,7 @@ public class PracticFormWebStepsTest {
     private  static  String gender = "Male";
     private static String mobile = "6666666666";
     private static String  year = "1999";
-    private static String month = "Marth";
+    private static String month = "March";
     private static String day= "13";
     private static String modalText ="Thanks for submitting the form";
 
@@ -35,7 +35,7 @@ public class PracticFormWebStepsTest {
 
         practicForm.openPage()
                 .setFirstName(firstName)
-                .setFirstName(lastName)
+                .setLastName(lastName)
                 .setEmail(email)
                 .shouseGender(gender)
                 .setMobileNumber(mobile)
