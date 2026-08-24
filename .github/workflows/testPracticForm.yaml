@@ -43,12 +43,12 @@ jobs:
       # Деплоим отчёт напрямую на GitHub Pages
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v2
-        if: always() # Запускаем даже если тесты упали, чтобы видеть отчёт с ошибками
+        if: always()
         with:
           github_token: \${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: build/allure-report/ # Папка, которую создал Gradle
-          user_name: github-actions[bot]
-          user_email: github-actions[bot]@users.noreply.github.com
+          branch: gh-pages
+          folder: build/allure-report/
+          username: github-actions[bot]
+          email: github-actions[bot]@users.noreply.github.com
           force_orphan: false
           keep_files: false
