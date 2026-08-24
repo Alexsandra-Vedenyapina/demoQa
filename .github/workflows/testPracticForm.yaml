@@ -41,13 +41,15 @@ jobs:
           retention-days: 7
 
       # Деплоим отчёт напрямую на GitHub Pages
+
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
           github_token: \${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: build/allure-report/
+          # ИСПРАВЛЕНИЕ: Путь должен совпадать с тем, что видно на скриншоте
+          publish_dir: build/reports/allure-report/
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
           force_orphan: false
