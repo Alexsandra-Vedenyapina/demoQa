@@ -1,57 +1,41 @@
-name: TestPracticForm
+name: Test
 
-
-on:
-  push:
-    branches:
-      - 'demoqa/**'
-  pull_request:
-    branches:
-      - 'demoqa/**'
+on: workflow_dispatch
 
 jobs:
-  build-and-test:
+  test:
+    # где заускаем
     runs-on: ubuntu-latest
-
+    # что делаем
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
+      # выкачиваем репозиторий
+      - uses: actions/checkout@v3
+      # настраиваем java
+      - uses: actions/setup-java@v3
         with:
-          java-version: '21'
-          distribution: 'temurin'
-
+          distribution: 'zulu'
+          java-version: '8'
       - uses: Xotabu4/selenoid-github-action@v2
-
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
-      - name: Run tests
-        run: ./gradlew clean test -Dselenide.remote=http://localhost:4444/wd/hub
-
-      - name: Get Allure history
-        uses: actions/checkout@v2
+      # запускаем тесты
+      - run: ./gradlew clean test -Dselenide.remote=http://localhost:4444/wd/hub
+      # скачиваем историю тестов
+      - uses: actions/checkout@v2
         if: always()
         continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages
-
-      - name: Test marketplace action
-        uses: simple-elf/allure-report-action@master
+      # генерируем отчет
+      - uses: simple-elf/allure-report-action@master
         if: always()
-        id: allure-report
         with:
           gh_pages: gh-pages
           allure_results: build/allure-results
           allure_report: allure-report
           allure_history: allure-history
-
-      - name: Deploy report to Github Pages
+      # публикуем отчет
+      - uses: peaceiris/actions-gh-pages@v2
         if: always()
-        uses: peaceiris/actions-gh-pages@v2
         env:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
