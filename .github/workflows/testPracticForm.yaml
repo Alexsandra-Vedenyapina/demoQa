@@ -1,43 +1,54 @@
-name: Test
+
+name: Test and Allure Report
 
 on: workflow_dispatch
 
 jobs:
   test:
-    # где заускаем
     runs-on: ubuntu-latest
-    # что делаем
+    
+    # КРИТИЧЕСКИ ВАЖНО: без этого шага деплой на gh-pages будет падать с 403
+    permissions:
+      contents: write
+
     steps:
-      # выкачиваем репозиторий
-      - uses: actions/checkout@v3
-      # настраиваем java
-      - uses: actions/setup-java@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Java 21 (Zulu)
+        uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '21'
-      - uses: Xotabu4/selenoid-github-action@v2
-      # запускаем тесты
-      - run: chmod +x gradlew
-      - run: ./gradlew clean test -Dselenide.remote=http://localhost:4444/wd/hub
-      # скачиваем историю тестов
-      - uses: actions/checkout@v2
-        if: always()
-        continue-on-error: true
+
+      - name: Start Selenoid
+        uses: Xotabu4/selenoid-github-action@v2
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # ВАЖНО: запускаем тесты И сразу генерируем HTML-отчёт одной командой
+      # Задача allureReport создаст папку build/allure-report/index.html
+      - name: Run tests and generate Allure report
+        run: ./gradlew clean test -Dselenide.remote=http://localhost:4444/wd/hub allureReport
+
+      # Опционально: сохраняем отчёт как артефакт, чтобы скачать и открыть локально
+      - name: Upload Allure Report Artifact
+        uses: actions/upload-artifact@v4
         with:
-          ref: gh-pages
-          path: gh-pages
-      # генерируем отчет
-      - uses: simple-elf/allure-report-action@master
-        if: always()
+          name: allure-report-run-\${{ github.run_number }}
+          path: build/allure-report/
+          retention-days: 7
+
+      # Деплоим отчёт напрямую на GitHub Pages
+      - name: Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v2
+        if: always() # Запускаем даже если тесты упали, чтобы видеть отчёт с ошибками
         with:
-          gh_pages: gh-pages
-          allure_results: build/allure-results
-          allure_report: allure-report
-          allure_history: allure-history
-      # публикуем отчет
-      - uses: peaceiris/actions-gh-pages@v2
-        if: always()
-        env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
+          github_token: \${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: build/allure-report/ # Папка, которую создал Gradle
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
+          force_orphan: false
+          keep_files: false
