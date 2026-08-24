@@ -21,6 +21,8 @@ public class PracticFormWebStepsTest {
     private static String day= "13";
     private static String modalText ="Thanks for submitting the form";
 
+    PracticFormPage practicForm = new PracticFormPage();
+
     @Test
     @Story("Успешная отправка студента")
     @Owner("AVedenyapina")
@@ -30,7 +32,6 @@ public class PracticFormWebStepsTest {
     public void testPracticFormWebSteps(){
         SelenideLogger.addListener("allure", new AllureSelenide());
         Configuration.browserSize = "1920x1080";
-        PracticFormPage practicForm = new PracticFormPage();
 
         practicForm.openPage()
                 .setFirstName(firstName)
