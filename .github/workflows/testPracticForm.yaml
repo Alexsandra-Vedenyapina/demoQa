@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-run-\${{ github.run_number }}
-          path: build/allure-report/
+          path: build/reports/allure-report
           retention-days: 7
 
       # Деплоим отчёт напрямую на GitHub Pages
