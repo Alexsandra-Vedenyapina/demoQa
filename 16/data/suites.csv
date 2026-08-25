@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","2757","Успешное заполнение формы студента","","2026-08-25","passed","2026-08-25","","qa.demo.test.PracticFormWebStepsTest","qa.demo.test.PracticFormWebStepsTest","testPracticFormWebSteps"
+"","5943","Успешное заполнение формы студента","","2026-08-25","passed","2026-08-25","","qa.demo.test.PracticFormLambdaTest","qa.demo.test.PracticFormLambdaTest","successfulFillingFormStudentTest"
+"","2643","Успешное заполнение формы студента","","2026-08-25","passed","2026-08-25","","qa.demo.test.PracticFormTest","qa.demo.test.PracticFormTest","testStudentRegistrationFormSuccessfulSubmission"
