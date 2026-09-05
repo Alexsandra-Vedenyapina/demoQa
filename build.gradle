@@ -33,7 +33,9 @@ dependencies {
             'org.junit.jupiter:junit-jupiter',
             'org.junit.jupiter:junit-jupiter:5.11.3',
             'com.github.javafaker:javafaker:1.0.2',
-            'io.qameta.allure:allure-selenide:2.29.0'
+            'io.qameta.allure:allure-selenide:2.29.0',
+            "io.rest-assured:rest-assured:6.0.0",
+            "org.slf4j:slf4j-simple:2.0.17"
     )
 }
 
