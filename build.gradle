@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id('io.qameta.allure') version '4.1.0'
+//    id 'io.freefai.lombok' version '6.0.8-m2'
 }
 
 group = 'ru.healthdiet'
@@ -29,13 +30,20 @@ repositories {
 }
 
 dependencies {
-    testImplementation ('com.codeborne:selenide:7.6.1',
-            'org.junit.jupiter:junit-jupiter',
+    // Lombok: только для компиляции + процессор аннотаций
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // Тестовые зависимости
+    testImplementation (
+            'com.codeborne:selenide:7.6.1',
             'org.junit.jupiter:junit-jupiter:5.11.3',
             'com.github.javafaker:javafaker:1.0.2',
             'io.qameta.allure:allure-selenide:2.29.0',
-            "io.rest-assured:rest-assured:6.0.0",
-            "org.slf4j:slf4j-simple:2.0.17"
+            'io.rest-assured:rest-assured:6.0.0',
+            'org.slf4j:slf4j-simple:2.0.17',
+            'com.fasterxml.jackson.core:jackson-databind:2.21.6',
+            'org.assertj:assertj-core:3.27.7'
     )
 }
 

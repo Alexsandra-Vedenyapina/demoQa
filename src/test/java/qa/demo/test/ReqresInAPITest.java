@@ -2,9 +2,14 @@ package qa.demo.test;
 
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
+import qa.demo.models.lombok.UserBodyLombokModel;
+import qa.demo.models.lombok.UsersResponseLombokModel;
+import qa.demo.models.pojo.UserBodyModelPojo;
+import qa.demo.models.pojo.UserResponseModelPojo;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -73,44 +78,50 @@ public class ReqresInAPITest {
     }
 
     @Test
-    void testSuccessUserCreation(){
-        String body="{\n" +
-                "  \"name\": \""+nameUser+"\",\n" +
-                "  \"job\": \""+jobUser+"\"\n" +
-                "}";
-        given()
-                .log().all()
-                .body(body)
+    void testSuccessUserCreationPojo(){
+        UserBodyModelPojo userBody= new UserBodyModelPojo();
+        userBody.setName(nameUser);
+        userBody.setJob(jobUser);
+
+        UserResponseModelPojo userResponse= given()
+                .log().uri()
+                .log().body()
+                .body(userBody)
                 .contentType(JSON)
                 .when()
                 .post(url)
                 .then()
-                .log().all()
+                .log().status()
+                .log().body()
                 .statusCode(201)
-                .body("name",is(nameUser))
-                .body("job", is(jobUser));
+                .extract().as(UserResponseModelPojo.class);
 
+        assertEquals(nameUser,userResponse.getName());
+        assertThat(userResponse.getJob()).isEqualTo(jobUser);
     }
 
     @Test
-    void testSuccessUserUpdate(){
-        String body="{\n" +
-                "  \"name\": \""+nameUser+"\",\n" +
-                "  \"job\": \""+jobNew+"\"\n" +
-                "}";
+    void testSuccessUserUpdateLombok(){
 
-        given()
-                .log().all()
-                .body(body)
+        UserBodyLombokModel userBody = new UserBodyLombokModel();
+        userBody.setName(nameUser);
+        userBody.setJob(jobNew);
+
+        UsersResponseLombokModel response = given()
+                .log().uri()
+                .log().body()
+                .body(userBody)
                 .contentType(JSON)
                 .when()
-                .put(url+"/7")
+                .put(url)
                 .then()
                 .log().status()
                 .log().body()
                 .statusCode(200)
-                .body("job",is(jobNew))
-                .body("name", is(nameUser));
+                .extract().as(UsersResponseLombokModel.class);
+
+        assertThat(response.getName()).isEqualTo(nameUser);
+        assertThat(response.getJob()).isEqualTo(jobNew);
     }
 
     @Test
