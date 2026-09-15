@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id('io.qameta.allure') version '4.1.0'
-//    id 'io.freefai.lombok' version '6.0.8-m2'
 }
 
 group = 'ru.healthdiet'
@@ -40,6 +39,7 @@ dependencies {
             'org.junit.jupiter:junit-jupiter:5.11.3',
             'com.github.javafaker:javafaker:1.0.2',
             'io.qameta.allure:allure-selenide:2.29.0',
+            'io.qameta.allure:allure-rest-assured:2.29.0',
             'io.rest-assured:rest-assured:6.0.0',
             'org.slf4j:slf4j-simple:2.0.17',
             'com.fasterxml.jackson.core:jackson-databind:2.21.6',
