@@ -49,7 +49,7 @@ public class ReqresInAPITest {
         int perPage = response.path("per_page");
         int dataSize = response.path("data.size()");
 
-        step("Проверка, что количество записей в data равно per_page", ()->
+        step("Проверка, что количество записей в data " + dataSize +"+ равно per_page "+perPage, ()->
                 assertEquals(perPage,dataSize, "Количество записей в data("+dataSize+") должно быть равно per_page("+perPage));
 
     }
@@ -69,7 +69,7 @@ public class ReqresInAPITest {
                 .then()
                 .extract().as(SinglUserResponse.class));
 
-        step("Проверка, полученный пользователь имеет id: " + idUser, () -> assertEquals(idUser,userResponse.getData().getId()));
+        step("Проверка, полученный пользователь имеет id: " + idUSER, () -> assertEquals(idUSER,userResponse.getData().getId()));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class ReqresInAPITest {
                 given(userRequestSpec)
                 .body(userBody)
                 .when()
-                .put()
+                .put("/"+idUSER)
                 .then()
                 .spec(userResponseSpec)
                 .statusCode(200)
